@@ -1,0 +1,109 @@
+// Chrome API mock for testing
+// This file sets up Jest mocks for Chrome APIs used in the tests
+
+// Mock types for Jest
+declare global {
+  var chrome: {
+    storage: {
+      local: {
+        get: jest.Mock;
+        set: jest.Mock;
+      };
+      sync: {
+        get: jest.Mock;
+        set: jest.Mock;
+      };
+    };
+    runtime: {
+      sendMessage: jest.Mock;
+      onMessage: {
+        addListener: jest.Mock;
+      };
+    };
+    tabs: {
+      query: jest.Mock;
+      sendMessage: jest.Mock;
+    };
+    contextMenus: {
+      create: jest.Mock;
+      onClicked: {
+        addListener: jest.Mock;
+      };
+    };
+  };
+  var localStorage: {
+    getItem: (key: string) => string | null;
+    setItem: (key: string, value: string) => void;
+    removeItem: (key: string) => void;
+    clear: () => void;
+    length: number;
+    key: (index: number) => string | null;
+  };
+}
+
+// Create a mock Chrome API with Jest functions
+const mockChrome = {
+  storage: {
+    local: {
+      get: jest.fn(),
+      set: jest.fn(),
+    },
+    sync: {
+      get: jest.fn(),
+      set: jest.fn(),
+    }
+  },
+  runtime: {
+    sendMessage: jest.fn(),
+    onMessage: {
+      addListener: jest.fn(),
+    },
+  },
+  tabs: {
+    query: jest.fn(),
+    sendMessage: jest.fn(),
+  },
+  contextMenus: {
+    create: jest.fn(),
+    onClicked: {
+      addListener: jest.fn(),
+    },
+  },
+};
+
+// Add to global scope
+globalThis.chrome = mockChrome;
+
+// Mock localStorage
+class LocalStorageMock {
+  private store: Record<string, string> = {};
+  length: number = 0;
+
+  clear(): void {
+    this.store = {};
+    this.length = 0;
+  }
+
+  getItem(key: string): string | null {
+    return this.store[key] || null;
+  }
+
+  setItem(key: string, value: string): void {
+    this.store[key] = String(value);
+    this.length = Object.keys(this.store).length;
+  }
+
+  removeItem(key: string): void {
+    delete this.store[key];
+    this.length = Object.keys(this.store).length;
+  }
+
+  key(index: number): string | null {
+    return Object.keys(this.store)[index] || null;
+  }
+}
+
+// Assign mock to globalThis
+globalThis.localStorage = new LocalStorageMock();
+
+export {};

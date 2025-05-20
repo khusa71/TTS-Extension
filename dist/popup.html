@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Web Reader Pro</title>
+    <link rel="stylesheet" href="popup.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="header">
+        <h1><i class="fas fa-headphones"></i> Web Reader Pro</h1>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode"><i class="fas fa-moon"></i></button>
+    </div>
+
+    <div class="section api-section">
+        <label for="apiKey">Google Cloud API Key:
+            <span class="help-icon" title="Get your API key from Google Cloud Console. It is stored only on your device."><i class="fas fa-question-circle"></i></span>
+        </label>
+        <div class="input-group">
+            <input type="text" id="apiKey" placeholder="Paste your API key here" aria-label="Google Cloud API Key">
+            <button id="saveApiKey" class="icon-button" aria-label="Save API Key"><i class="fas fa-save"></i></button>
+        </div>
+        <p id="apiKeyStatus"></p>
+    </div>
+
+    <div class="section voice-section">
+        <label for="voiceSelect">Voice & Language:
+            <span class="help-icon" title="Choose a Google Cloud TTS voice.">?</span>
+        </label>
+        <select id="voiceSelect" aria-label="Voice selection"></select>
+        <div id="voiceInfo" class="voice-info"></div>
+    </div>
+
+    <div class="section controls-section">
+        <div class="speed-controls">
+            <label>
+                Speed: <span id="speedValue">1.0x</span>
+                <span class="help-icon" title="Change the reading speed. You can adjust this at any time."><i class="fas fa-question-circle"></i></span>
+                <div class="speed-buttons">
+                    <button class="speed-preset" data-speed="0.75" aria-label="0.75x speed">0.75x</button>
+                    <button class="speed-preset" data-speed="1" aria-label="1x speed">1x</button>
+                    <button class="speed-preset" data-speed="1.25" aria-label="1.25x speed">1.25x</button>
+                    <button class="speed-preset" data-speed="1.5" aria-label="1.5x speed">1.5x</button>
+                    <button class="speed-preset" data-speed="2" aria-label="2x speed">2x</button>
+                </div>
+            </label>
+            <input type="range" id="speedRange" min="0.5" max="2" step="0.05" value="1" aria-label="Speed slider">
+        </div>
+        
+        <div class="highlight-controls">
+            <label class="checkbox-label">
+                <input type="checkbox" id="enableHighlight" checked aria-label="Enable text highlighting">
+                Enable text highlighting
+                <span class="help-icon" title="Highlight text as it is read aloud."><i class="fas fa-question-circle"></i></span>
+            </label>
+            <div class="highlight-options">
+                <label class="radio-label">
+                    <input type="radio" name="highlightType" value="word" checked aria-label="Word-by-word highlighting">
+                    Word-by-word
+                </label>
+                <label class="radio-label">
+                    <input type="radio" name="highlightType" value="sentence" aria-label="Sentence highlighting">
+                    Sentence
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <div class="section playback-section">
+        <div class="main-controls">
+            <button id="readSelected" class="primary-button" aria-label="Read selected text">
+                <i class="fas fa-book-reader"></i> Read Selection
+            </button>
+            <button id="readPage" class="primary-button" aria-label="Read entire page">
+                <i class="fas fa-file-alt"></i> Read Page
+            </button>
+        </div>
+        <div class="playback-controls">
+            <button id="previous" class="control-button" aria-label="Previous"><i class="fas fa-step-backward"></i></button>
+            <button id="pause" class="control-button" aria-label="Pause"><i class="fas fa-pause"></i></button>
+            <button id="resume" class="control-button" aria-label="Resume"><i class="fas fa-play"></i></button>
+            <button id="next" class="control-button" aria-label="Next"><i class="fas fa-step-forward"></i></button>
+            <button id="stop" class="control-button" aria-label="Stop"><i class="fas fa-stop"></i></button>
+        </div>
+    </div>
+
+    <div id="progress-container" class="section progress-section" style="display: none;">
+        <div class="progress-info">
+            <span id="currentTime">0:00</span>
+            <div class="progress-bar">
+                <div id="progress-fill"></div>
+            </div>
+            <span id="totalTime">0:00</span>
+        </div>
+    </div>
+
+    <div id="ariaStatus" aria-live="polite" style="position:absolute;left:-9999px;"></div>
+
+    <!-- Onboarding modal -->
+    <div id="onboardingModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close-modal" id="closeOnboarding" aria-label="Close tutorial">&times;</span>
+            <h2>Welcome to Web Reader Pro!</h2>
+            <ol>
+                <li>Paste your Google Cloud TTS API key above.</li>
+                <li>Select your preferred voice and language.</li>
+                <li>Adjust speed and highlighting as you like.</li>
+                <li>Click <b>Read Selection</b> or <b>Read Page</b> to start listening.</li>
+                <li>Use the playback controls to pause, resume, or skip.</li>
+            </ol>
+            <p>All your settings are saved locally. For help, click any <i class="fas fa-question-circle"></i> icon.</p>
+            <div style="margin-top:18px;">
+                <b>Keyboard Shortcuts:</b>
+                <ul style="margin-top:8px;font-size:0.95em;">
+                    <li><b>Space</b>: Play/Pause</li>
+                    <li><b>S</b>: Stop</li>
+                    <li><b>N</b>: Next chunk</li>
+                    <li><b>P</b>: Previous chunk</li>
+                    <li><b>R</b>: Read Page</li>
+                    <li><b>L</b>: Read Selection</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="popup.js"></script>
+</body>
+</html>

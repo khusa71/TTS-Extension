@@ -1,0 +1,494 @@
+/* Modern styling for the TTS extension */
+:root {
+    --primary-color: #1976d2;
+    --primary-dark: #1565c0;
+    --text-color: #2c3e50;
+    --bg-color: #f8fafc;
+    --border-color: #e2e8f0;
+    --hover-bg: #f1f5f9;
+    --success-color: #4caf50;
+    --error-color: #f44336;
+
+    --dark-bg: #23272f;
+    --dark-text: #f8fafc;
+    --dark-border: #374151;
+    --dark-hover: #2d333b;
+    --dark-info: #283040;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    margin: 0;
+    min-width: 350px;
+    background: var(--bg-color);
+    color: var(--text-color);
+}
+
+body.dark-mode {
+    background: var(--dark-bg);
+    color: var(--dark-text);
+}
+
+.header {
+    background: var(--primary-color);
+    color: white;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+}
+
+body.dark-mode .header {
+    background: #111827;
+    color: var(--dark-text);
+}
+
+.header h1 {
+    font-size: 1.2rem;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.section {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 2px 8px rgba(44,62,80,0.04);
+    border-radius: 8px;
+    margin-bottom: 16px;
+    transition: background 0.3s, box-shadow 0.3s;
+}
+
+body.dark-mode .section {
+    background: #23272f;
+    border-bottom: 1px solid var(--dark-border);
+}
+
+label {
+    font-weight: 500;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.input-group {
+    display: flex;
+    gap: 8px;
+}
+
+input[type="text"] {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 0.9rem;
+    transition: background 0.2s, color 0.2s, border 0.2s;
+}
+
+select {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background: white;
+    font-size: 0.9rem;
+    transition: background 0.2s, color 0.2s, border 0.2s;
+}
+
+input:focus, select:focus, button:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+body.dark-mode input,
+body.dark-mode select,
+body.dark-mode #voiceSearch {
+    background: #1a1d23;
+    color: var(--dark-text);
+    border: 1px solid var(--dark-border);
+}
+
+.info-box {
+    background: var(--hover-bg);
+    border-radius: 6px;
+    padding: 8px;
+    margin-top: 8px;
+    font-size: 0.85rem;
+}
+
+body.dark-mode .info-box {
+    background: var(--dark-info);
+    color: var(--dark-text);
+}
+
+/* Buttons */
+button {
+    padding: 10px 16px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: white;
+    background: var(--primary-color);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+
+button:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+body.dark-mode button {
+    background: var(--dark-info);
+}
+
+.primary-button {
+    background: var(--primary-color);
+    color: white;
+    padding: 10px 16px;
+    width: 100%;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+}
+
+.primary-button:hover {
+    background: var(--primary-dark);
+}
+
+body.dark-mode .primary-button,
+body.dark-mode .icon-button {
+    background: #2563eb;
+    color: #fff;
+}
+
+body.dark-mode .primary-button:hover,
+body.dark-mode .icon-button:hover {
+    background: #1d4ed8;
+}
+
+.control-button {
+    background: white;
+    border: 1px solid var(--border-color);
+    padding: 8px;
+    color: var(--text-color);
+}
+
+.control-button:hover {
+    background: var(--hover-bg);
+}
+
+body.dark-mode .control-button {
+    background: #23272f;
+    color: var(--dark-text);
+    border: 1px solid var(--dark-border);
+}
+
+body.dark-mode .control-button:hover {
+    background: var(--dark-hover);
+}
+
+.icon-button {
+    padding: 8px 12px;
+    background: var(--primary-color);
+    color: white;
+}
+
+.button-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 16px;
+}
+
+.read-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.read-buttons button {
+    width: 100%;
+    max-width: 200px;
+}
+
+/* Speed Controls */
+.speed-controls {
+    margin-bottom: 16px;
+}
+
+.speed-buttons {
+    display: flex;
+    gap: 4px;
+    margin: 8px 0;
+}
+
+.speed-preset {
+    background: white;
+    border: 1px solid var(--border-color);
+    padding: 4px 8px;
+    font-size: 0.85rem;
+}
+
+speed-preset.active {
+    background: var(--primary-color);
+    color: white;
+}
+
+body.dark-mode .speed-preset {
+    background: #23272f;
+    color: var(--dark-text);
+    border: 1px solid var(--dark-border);
+}
+
+body.dark-mode .speed-preset.active {
+    background: #2563eb;
+    color: #fff;
+}
+
+input[type="range"] {
+    width: 100%;
+    margin: 8px 0;
+}
+
+/* Highlight Controls */
+.highlight-controls {
+    margin-bottom: 16px;
+}
+
+.checkbox-label, .radio-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: normal;
+    margin: 4px 0;
+}
+
+.highlight-options {
+    margin-left: 24px;
+    margin-top: 8px;
+}
+
+/* Playback Controls */
+.playback-controls {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+/* Progress Bar */
+.progress-section {
+    padding-bottom: 16px;
+}
+
+.progress-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+}
+
+.progress-bar {
+    flex: 1;
+    height: 4px;
+    background: var(--border-color);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+body.dark-mode .progress-bar {
+    background: var(--dark-border);
+}
+
+#progress-fill {
+    height: 100%;
+    background: var(--primary-color);
+    width: 0%;
+    transition: width 0.1s linear;
+}
+
+body.dark-mode #progress-fill {
+    background: #2563eb;
+}
+
+/* Status Messages */
+#apiKeyStatus {
+    font-size: 0.9rem;
+    margin: 4px 0;
+}
+
+#apiKeyStatus.success {
+    color: var(--success-color);
+}
+
+#apiKeyStatus.error {
+    color: var(--error-color);
+}
+
+/* Help Icon */
+.help-icon {
+    color: var(--primary-color);
+    margin-left: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    vertical-align: middle;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+.help-icon:hover {
+    opacity: 1;
+}
+
+/* Modal for onboarding/tutorial */
+.modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(44, 62, 80, 0.25);
+}
+.modal-content {
+    background: #fff;
+    border-radius: 10px;
+    padding: 32px 24px 24px 24px;
+    box-shadow: 0 8px 32px rgba(44,62,80,0.18);
+    max-width: 400px;
+    width: 90vw;
+    position: relative;
+    color: var(--text-color);
+    transition: background 0.2s, color 0.2s, border 0.2s;
+}
+
+body.dark-mode .modal-content {
+    background: #23272f;
+    color: var(--dark-text);
+}
+
+.close-modal {
+    position: absolute;
+    top: 12px;
+    right: 18px;
+    font-size: 1.5em;
+    color: var(--primary-color);
+    cursor: pointer;
+    font-weight: bold;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+body.dark-mode .close-modal {
+    color: #60a5fa;
+}
+
+.close-modal:hover {
+    opacity: 1;
+}
+
+/* Voice search box */
+#voiceSearch {
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+    transition: background 0.2s, color 0.2s, border 0.2s;
+}
+
+/* Voice & Language section improvements */
+.voice-section {
+    margin-bottom: 24px;
+}
+#voiceSearch {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    font-size: 1em;
+    background: #f9fafb;
+    transition: border 0.2s;
+}
+#voiceSearch:focus {
+    border: 1.5px solid #2563eb;
+    outline: none;
+    background: #fff;
+}
+#voiceSelect {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 1em;
+    background: #fff;
+    margin-bottom: 0;
+    transition: border 0.2s;
+    min-height: 44px;
+}
+#voiceSelect:focus {
+    border: 1.5px solid #2563eb;
+    outline: none;
+}
+.voice-loading {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #888;
+    font-size: 1em;
+    padding: 10px 0;
+    justify-content: center;
+}
+.voice-loading .spinner {
+    width: 18px;
+    height: 18px;
+    border: 3px solid #d1d5db;
+    border-top: 3px solid #2563eb;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Theme toggle button */
+.theme-toggle {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.2em;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+    z-index: 10;
+}
+.theme-toggle:hover {
+    opacity: 1;
+}
+
+/* Sticky control buttons */
+.controls {
+    position: sticky;
+    bottom: 0;
+    background: var(--bg-color);
+    padding: 12px;
+    box-shadow: 0 -2px 8px rgba(44, 62, 80, 0.1);
+    z-index: 10;
+}
+
+body.dark-mode .controls {
+    background: var(--dark-bg);
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.5);
+}

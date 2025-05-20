@@ -1,0 +1,128 @@
+// Test file for settings.ts
+/// <reference types="jest" />
+/// <reference types="chrome" />
+import { loadSettings, saveSettings, getThemePreference, setThemePreference } from '../src/settings';
+import { PlaybackSettings } from '../src/settings';
+
+describe('Settings Module', () => {
+  // Mock chrome storage
+  beforeEach(() => {
+    (chrome.storage.local.get as jest.Mock).mockClear();
+    (chrome.storage.local.set as jest.Mock).mockClear();
+    (chrome.runtime.sendMessage as jest.Mock).mockClear();
+  });
+
+  test('loadSettings returns default values when nothing in storage', () => {
+    // Mock empty storage
+    (chrome.storage.local.get as jest.Mock).mockImplementation(
+      (keys: string | string[] | { [key: string]: any } | null, 
+       callback: (items: { [key: string]: any }) => void) => {
+      callback({});
+    });
+
+    const callback = jest.fn();
+    loadSettings(callback);
+
+    expect(chrome.storage.local.get).toHaveBeenCalledWith(['playbackSettings'], expect.any(Function));
+    expect(callback).toHaveBeenCalledWith({
+      speed: 1,
+      highlightType: 'word',
+      enableHighlight: true
+    });
+  });
+
+  test('loadSettings returns stored values when available', () => {
+    // Mock storage with values
+    const storedSettings: PlaybackSettings = {
+      speed: 1.5,
+      highlightType: 'sentence',
+      enableHighlight: false
+    };
+    
+    (chrome.storage.local.get as jest.Mock).mockImplementation(
+      (keys: string | string[] | { [key: string]: any } | null, 
+       callback: (items: { [key: string]: any }) => void) => {
+      callback({ playbackSettings: storedSettings });
+    });
+
+    const callback = jest.fn();
+    loadSettings(callback);
+
+    expect(callback).toHaveBeenCalledWith(storedSettings);
+  });
+
+  test('saveSettings updates existing settings and sends message', () => {
+    // Mock existing settings
+    const existingSettings: PlaybackSettings = {
+      speed: 1,
+      highlightType: 'word',
+      enableHighlight: true
+    };
+    
+    (chrome.storage.local.get as jest.Mock).mockImplementation(
+      (keys: string | string[] | { [key: string]: any } | null, 
+       callback: (items: { [key: string]: any }) => void) => {
+      callback({ playbackSettings: existingSettings });
+    });
+
+    const newPartialSettings = {
+      speed: 1.5
+    };
+    const callback = jest.fn();
+    
+    saveSettings(newPartialSettings, callback);
+
+    // Check that chrome.storage.local.set was called with merged settings
+    expect(chrome.storage.local.set).toHaveBeenCalledWith({
+      playbackSettings: {
+        speed: 1.5, // Updated
+        highlightType: 'word', // Unchanged
+        enableHighlight: true // Unchanged
+      }
+    }, expect.any(Function));
+
+    // Check that message was sent to update background settings
+    expect(chrome.runtime.sendMessage).toHaveBeenCalledWith({
+      action: "updateSettings",
+      settings: {
+        speed: 1.5,
+        highlightType: 'word',
+        enableHighlight: true
+      }
+    });
+  });
+
+  test('getThemePreference returns dark mode preference', () => {
+    // Mock localStorage
+    const localStorageGetItem = jest.spyOn(Storage.prototype, 'getItem');
+    
+    // Test dark mode enabled
+    localStorageGetItem.mockReturnValue('1');
+    expect(getThemePreference()).toBe(true);
+    
+    // Test dark mode disabled
+    localStorageGetItem.mockReturnValue('0');
+    expect(getThemePreference()).toBe(false);
+    
+    // Test default case
+    localStorageGetItem.mockReturnValue(null);
+    expect(getThemePreference()).toBe(false);
+    
+    localStorageGetItem.mockRestore();
+  });
+
+  test('setThemePreference saves preference to localStorage', () => {
+    // Mock localStorage
+    const localStorageSetItem = jest.spyOn(Storage.prototype, 'setItem');
+    
+    // Test dark mode enabled
+    setThemePreference(true);
+    expect(localStorageSetItem).toHaveBeenCalledWith('tts_theme_dark', '1');
+    
+    // Test dark mode disabled
+    setThemePreference(false);
+    expect(localStorageSetItem).toHaveBeenCalledWith('tts_theme_dark', '0');
+    
+    localStorageSetItem.mockRestore();
+  });
+});
