@@ -3,6 +3,9 @@
 <head>
     <title>Web Reader Pro</title>
     <link rel="stylesheet" href="popup.css">
+    <link rel="stylesheet" href="cache.css">
+    <link rel="stylesheet" href="language_detection.css">
+    <link rel="stylesheet" href="voice_preferences.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
@@ -20,6 +23,9 @@
             <button id="saveApiKey" class="icon-button" aria-label="Save API Key"><i class="fas fa-save"></i></button>
         </div>
         <p id="apiKeyStatus"></p>
+        <div class="help-text" id="diagnosticLinkContainer">
+            <small>Having issues? <a href="#" id="openDiagnostics">Run diagnostics</a> to troubleshoot.</small>
+        </div>
     </div>
 
     <div class="section voice-section">
@@ -90,6 +96,53 @@
                 <div id="progress-fill"></div>
             </div>
             <span id="totalTime">0:00</span>
+        </div>
+    </div>
+    
+    <!-- Cache settings section -->
+    <div class="section cache-section">
+        <h3><i class="fas fa-database"></i> Audio Cache</h3>
+        <div class="cache-controls">
+            <p class="cache-description">
+                Caching helps reduce API calls and improve performance for repeated content.
+            </p>
+            <div class="cache-stats">
+                <span id="cacheHits">Hits: 0</span> |
+                <span id="cacheMisses">Misses: 0</span> |
+                <span id="cacheSize">Items: 0</span>
+            </div>
+            <button id="clearCache" class="secondary-button" aria-label="Clear audio cache">
+                <i class="fas fa-trash-alt"></i> Clear Cache
+            </button>
+        </div>
+    </div>
+    
+    <!-- Voice preferences section -->
+    <div class="section voice-pref-section">
+        <h3><i class="fas fa-sliders-h"></i> Voice Preferences</h3>
+        <p class="preference-description">
+            Set your preferences for auto-detected voices:
+        </p>
+        
+        <div class="pref-option">
+            <label for="voiceGenderPreference">Preferred Gender:</label>
+            <select id="voiceGenderPreference" class="pref-select">
+                <option value="">No preference</option>
+                <option value="MALE">Male</option>
+                <option value="FEMALE">Female</option>
+                <option value="NEUTRAL">Neutral</option>
+            </select>
+        </div>
+        
+        <div class="pref-option">
+            <label for="voiceTypePreference">Preferred Voice Type:</label>
+            <select id="voiceTypePreference" class="pref-select">
+                <option value="">No preference</option>
+                <option value="Neural2">Neural2 (Premium)</option>
+                <option value="Studio">Studio (Premium)</option>
+                <option value="WaveNet">WaveNet (Premium)</option>
+                <option value="Standard">Standard</option>
+            </select>
         </div>
     </div>
 

@@ -1,0 +1,191 @@
+<!-- diagnostics.html - TTS Extension Diagnostic Tool -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TTS Extension Diagnostics</title>
+    <link rel="stylesheet" href="popup.css">
+    <style>
+        body {
+            min-width: 600px;
+            padding: 20px;
+        }
+        
+        .diagnostic-section {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #f5f5f5;
+        }
+        
+        .diagnostic-section h2 {
+            margin-top: 0;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+        
+        .result-item {
+            margin-bottom: 10px;
+            padding: 8px;
+            border-radius: 4px;
+        }
+        
+        .success {
+            background-color: rgba(76, 175, 80, 0.1);
+            border-left: 4px solid #4CAF50;
+        }
+        
+        .warning {
+            background-color: rgba(255, 152, 0, 0.1);
+            border-left: 4px solid #FF9800;
+        }
+        
+        .error {
+            background-color: rgba(244, 67, 54, 0.1);
+            border-left: 4px solid #F44336;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .logs {
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 4px;
+            max-height: 200px;
+            overflow: auto;
+            font-family: monospace;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+        
+        .test-container {
+            margin-top: 15px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top-color: #3498db;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>TTS Extension Diagnostics</h1>
+    </div>
+    
+    <div class="diagnostic-section">
+        <h2>API Key Validation</h2>
+        <div id="apiKeyStatus" class="result-item">
+            <div id="apiKeyLoading" class="loading"></div>
+            <span>Checking API key...</span>
+        </div>
+        
+        <div class="test-container">
+            <label for="apiKey">Google Cloud API Key:</label>
+            <input type="text" id="apiKey" placeholder="Enter your API key" style="width: 100%; margin-bottom: 10px;">
+            <button id="checkApiKey" class="button">Validate API Key</button>
+            <div class="tips-box" style="margin-top: 10px; padding: 10px; background-color: #f8f9fa; border-left: 3px solid #007bff; font-size: 0.9em;">
+                <p><strong>Tips for API Key issues:</strong></p>
+                <ul>
+                    <li>Make sure the Text-to-Speech API is enabled in your Google Cloud Console</li>
+                    <li>Check if there are any API key restrictions in your Google Cloud Console</li>
+                    <li>Verify your quota limits in the Google Cloud Console</li>
+                    <li>Try creating a new API key if problems persist</li>
+                </ul>
+                <p><a href="https://cloud.google.com/text-to-speech" target="_blank" rel="noopener">Visit Google Cloud Text-to-Speech Documentation</a></p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="diagnostic-section">
+        <h2>Audio Support</h2>
+        <div id="audioSupportStatus" class="result-item">
+            <div id="audioSupportLoading" class="loading"></div>
+            <span>Checking audio support...</span>
+        </div>
+        <div class="test-container">
+            <button id="testAudioSupport" class="button">Test Audio Playback</button>
+            <div id="testAudioContainer" style="margin-top: 10px;"></div>
+            <div class="tips-box" style="margin-top: 10px; padding: 10px; background-color: #f8f9fa; border-left: 3px solid #4CAF50; font-size: 0.9em;">
+                <p><strong>Common Audio Issues:</strong></p>
+                <ul>
+                    <li>Your browser must support MP3 audio format</li>
+                    <li>Check that your system volume is turned up</li>
+                    <li>Some sites may block audio playback without user interaction</li>
+                    <li>Try using a different browser if you continue to have issues</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="diagnostic-section">
+        <h2>TTS Synthesis Test</h2>
+        <div id="synthesisStatus" class="result-item">
+            <span>Use the button below to test TTS synthesis</span>
+        </div>
+        
+        <div class="test-container">
+            <label for="voiceSelect">Voice:</label>
+            <select id="voiceSelect" style="width: 100%; margin-bottom: 10px;">
+                <option value="">Loading voices...</option>
+            </select>
+            <button id="testSynthesis" class="button" disabled>Test Synthesis</button>
+            <div id="sampleAudio" style="margin-top: 10px;"></div>
+        </div>
+    </div>
+    
+    <div class="diagnostic-section">
+        <h2>Connection Test</h2>
+        <div id="connectionStatus" class="result-item">
+            <span>Use the button below to test connection to Google TTS API</span>
+        </div>
+        
+        <div class="test-container">
+            <button id="testConnection" class="button">Test Connection</button>
+        </div>
+    </div>
+    
+    <div class="diagnostic-section">
+        <h2>System Information</h2>
+        <div id="systemInfo" class="result-item">
+            <pre id="systemInfoDetails"></pre>
+        </div>
+    </div>
+    
+    <div class="action-buttons">
+        <button id="runAllTests" class="button">Run All Tests</button>
+        <button id="copyResults" class="button">Copy Results</button>
+        <button id="viewLogs" class="button">View Logs</button>
+    </div>
+    
+    <div id="logs" class="logs" style="display: none;">
+        <div id="logContent"></div>
+    </div>
+    
+    <script src="diagnostics.js"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            // Load our diagnostics module
+            const script = document.createElement('script');
+            script.src = 'diagnostics.js';
+            script.type = 'text/javascript';
+            document.head.appendChild(script);
+        });
+    </script>
+</body>
+</html>

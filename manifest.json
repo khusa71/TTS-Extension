@@ -29,5 +29,19 @@
     "32": "images/icon32.svg",
     "48": "images/icon48.svg",
     "128": "images/icon128.svg"
-  }
+  },
+  "options_ui": {
+    "page": "diagnostics.html",
+    "open_in_tab": true
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["diagnostics.html", "diagnostics.js", "popup.css"],
+      "matches": ["<all_urls>"]
+    },
+    {
+      "resources": ["tts_highlight_content.js"],
+      "matches": ["<all_urls>"]
+    }
+  ]
 }

@@ -1,0 +1,62 @@
+/* Voice preferences section styling */
+.voice-pref-section {
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border-color);
+}
+
+.preference-description {
+    font-size: 0.9em;
+    margin: 5px 0 10px 0;
+    color: var(--text-color-secondary);
+}
+
+.pref-option {
+    margin-bottom: 12px;
+}
+
+.pref-option label {
+    font-size: 0.9em;
+    font-weight: 500;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.pref-select {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background: white;
+    font-size: 0.9rem;
+    color: var(--text-color);
+    transition: background 0.2s, color 0.2s, border 0.2s;
+}
+
+body.dark-mode .pref-select {
+    background: #1a1d23;
+    color: var(--dark-text);
+    border: 1px solid var(--dark-border);
+}
+
+.save-confirmation {
+    margin-top: 8px;
+    padding: 6px 10px;
+    font-size: 0.85em;
+    color: #2ecc71;
+    background-color: rgba(46, 204, 113, 0.1);
+    border-radius: 4px;
+    text-align: center;
+    animation: fadeInOut 2s ease-in-out;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+body.dark-mode .save-confirmation {
+    background-color: rgba(46, 204, 113, 0.2);
+}

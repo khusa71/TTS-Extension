@@ -1,0 +1,64 @@
+/* Cache section styling */
+.cache-section {
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border-color);
+}
+
+.cache-description {
+    font-size: 0.9em;
+    margin: 5px 0;
+    color: var(--text-color-secondary);
+}
+
+.cache-stats {
+    font-size: 0.85em;
+    font-family: monospace;
+    background-color: var(--bg-color-secondary);
+    padding: 8px;
+    border-radius: 4px;
+    margin: 8px 0;
+}
+
+.cache-controls {
+    display: flex;
+    flex-direction: column;
+}
+
+.secondary-button {
+    background: #f1f5f9;
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    max-width: 150px;
+    margin-top: 8px;
+}
+
+.secondary-button:hover {
+    background: #e2e8f0;
+}
+
+body.dark-mode .secondary-button {
+    background: #1a1d23;
+    color: var(--dark-text);
+    border: 1px solid var(--dark-border);
+}
+
+body.dark-mode .secondary-button:hover {
+    background: var(--dark-hover);
+}
+
+.success-message {
+    color: var(--success-color);
+    font-size: 0.9em;
+    margin-top: 8px;
+}
+
+body.dark-mode .success-message {
+    color: #4ade80;
+}

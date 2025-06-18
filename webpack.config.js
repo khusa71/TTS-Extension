@@ -7,6 +7,7 @@ module.exports = {
     background: './src/background.ts',
     popup: './src/popup.ts',
     content: './src/tts_highlight_content.ts',
+    diagnostics: './src/tts_diagnostics.ts' // Add the diagnostics entry point
   },
   module: {
     rules: [
@@ -28,6 +29,9 @@ module.exports = {
     new CopyPlugin({
       patterns: [
         { from: 'public', to: '.' },
+        { from: 'cache.css', to: 'cache.css' },
+        { from: 'language_detection.css', to: 'language_detection.css' },
+        { from: 'voice_preferences.css', to: 'voice_preferences.css' },
       ],
     }),
   ],

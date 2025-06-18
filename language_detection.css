@@ -1,0 +1,65 @@
+/* Language detection CSS */
+.auto-detect-language {
+    margin-top: 10px;
+}
+
+.auto-detect-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: #f8fafc;
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.auto-detect-btn:hover {
+    background-color: #e2e8f0;
+}
+
+body.dark-mode .auto-detect-btn {
+    background-color: #283040;
+    color: var(--dark-text);
+    border-color: var(--dark-border);
+}
+
+body.dark-mode .auto-detect-btn:hover {
+    background-color: #384050;
+}
+
+.detected-language-info {
+    margin-top: 8px;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 13px;
+    background-color: rgba(52, 152, 219, 0.1);
+    border-left: 3px solid #3498db;
+}
+
+.detected-language-info.success {
+    background-color: rgba(46, 204, 113, 0.1);
+    border-left: 3px solid #2ecc71;
+}
+
+.detected-language-info.warning {
+    background-color: rgba(241, 196, 15, 0.1);
+    border-left: 3px solid #f1c40f;
+}
+
+body.dark-mode .detected-language-info {
+    background-color: rgba(52, 152, 219, 0.2);
+}
+
+body.dark-mode .detected-language-info.success {
+    background-color: rgba(46, 204, 113, 0.2);
+}
+
+body.dark-mode .detected-language-info.warning {
+    background-color: rgba(241, 196, 15, 0.2);
+}
